@@ -214,4 +214,18 @@ class Service extends AbstractService
             ), $body->tenants);
         }
     }
+    
+    /**
+     * Create a new tenant with provided params.
+     *
+     * @param  $params array Tenant data
+     * @return \OpenCloud\Identity\Resource\Tenant
+     */
+    public function createTenant(array $params)
+    {
+        $tenant = $this->resource('Tenant');
+        $tenant->create($params);
+
+        return $tenant;
+    }
 }
