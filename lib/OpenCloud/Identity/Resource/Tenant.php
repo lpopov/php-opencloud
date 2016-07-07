@@ -109,4 +109,34 @@ class Tenant extends PersistentObject
     {
         return $this->enabled === true;
     }
+    
+    /**
+     * Grant role to user on tenant
+     *
+     * @param $userId
+     * @param $roleId
+     * @return \Guzzle\Http\Message\Response
+     */
+    public function addUserRole($userId, $roleId)
+    {
+        $url = $this->getUrl();
+        $url->addPath('users')->addPath($userId)->addPath('roles')->addPath('OS-KSADM')->addPath($roleId);
+
+        return $this->getClient()->put($url)->send();
+    }
+    
+    /**
+     * Revoke role from user on tenant
+     *
+     * @param $userId
+     * @param $roleId
+     * @return \Guzzle\Http\Message\Response
+     */
+    public function removeUserRole($userId, $roleId)
+    {
+        $url = $this->getUrl();
+        $url->addPath('users')->addPath($userId)->addPath('roles')->addPath('OS-KSADM')->addPath($roleId);
+
+        return $this->getClient()->delete($url)->send();
+    }
 }
