@@ -44,7 +44,7 @@ class Tenant extends PersistentObject
     protected static $url_resource = 'tenants';
     protected static $json_name = 'tenant';
     
-    protected $createKeys = array('name', 'desctiption', 'enabled');
+    protected $createKeys = array('name', 'description', 'enabled');
 
     /**
      * @param $id Sets the ID
