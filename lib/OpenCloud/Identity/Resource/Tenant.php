@@ -38,13 +38,17 @@ class Tenant extends PersistentObject
     /** @var string A description of the tenant */
     private $description;
 
+    /** @var string The speed of the tenant */
+    private $speed;
+
     /** @var bool Whether this tenant is enabled or not (i.e. whether it can fulfil API operations) */
     private $enabled;
 
     protected static $url_resource = 'tenants';
     protected static $json_name = 'tenant';
-    
-    protected $createKeys = array('name', 'description', 'enabled');
+
+    protected $createKeys = array('name', 'description', 'enabled', 'speed');
+    protected $updateKeys = array('name', 'description', 'enabled', 'speed');
 
     /**
      * @param $id Sets the ID
@@ -109,7 +113,7 @@ class Tenant extends PersistentObject
     {
         return $this->enabled === true;
     }
-    
+
     /**
      * Grant role to user on tenant
      *
@@ -124,7 +128,7 @@ class Tenant extends PersistentObject
 
         return $this->getClient()->put($url)->send();
     }
-    
+
     /**
      * Revoke role from user on tenant
      *
@@ -138,5 +142,36 @@ class Tenant extends PersistentObject
         $url->addPath('users')->addPath($userId)->addPath('roles')->addPath('OS-KSADM')->addPath($roleId);
 
         return $this->getClient()->delete($url)->send();
+    }
+
+    /**
+     * @param $speed Sets the speed
+     */
+    public function setSpeed($speed)
+    {
+        $this->speed = $speed;
+    }
+
+    /**
+     * @return string Returns the speed
+     */
+    public function getSpeed()
+    {
+        return $this->speed;
+    }
+
+    /**
+     * List roles for user on tenant
+     *
+     * @param $userId
+     * @param $roleId
+     * @return \Guzzle\Http\Message\Response
+     */
+    public function listUserRoles($userId)
+    {
+        $url = $this->getUrl();
+        $url->addPath('users')->addPath($userId)->addPath('roles');
+
+        return $this->getClient()->get($url)->send();
     }
 }
