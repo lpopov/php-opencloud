@@ -353,6 +353,6 @@ class User extends PersistentObject
         $json = json_encode($this->updateJson($params));
         $this->checkJsonError();
 
-        return $this->getClient()->post($this->getUrl(), self::getJsonHeader(), $json)->send();
+        return $this->getClient()->put($this->getUrl(), self::getJsonHeader(), $json)->send();
     }
 }
