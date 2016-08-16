@@ -56,8 +56,11 @@ class User extends PersistentObject
     /** @var string The string password for this user */
     private $password;
 
-    protected $createKeys = array('username', 'email', 'enabled', 'password');
-    protected $updateKeys = array('username', 'email', 'enabled', 'RAX-AUTH:defaultRegion', 'RAX-AUTH:domainId', 'id');
+    /** @var string The name of this user */
+    private $fullname;
+
+    protected $createKeys = array('username', 'email', 'enabled', 'password', 'fullname');
+    protected $updateKeys = array('username', 'email', 'enabled', 'RAX-AUTH:defaultRegion', 'RAX-AUTH:domainId', 'id', 'fullname');
 
     protected $aliases = array(
         'name'                   => 'username',
@@ -354,5 +357,21 @@ class User extends PersistentObject
         $this->checkJsonError();
 
         return $this->getClient()->put($this->getUrl(), self::getJsonHeader(), $json)->send();
+    }
+
+    /**
+     * @param $fullname Sets the full user name
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+    }
+
+    /**
+     * @return string Get the full user name
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
     }
 }
